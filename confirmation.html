@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Booking Confirmation - MovieBook</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>🎬 MovieBook</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Confirmation -->
+
+    <section class="confirmation-page">
+
+        <div class="ticket">
+
+            <div class="ticket-header">
+
+                <h2>🎟️ Booking Confirmed</h2>
+
+                <p>Your movie ticket has been booked successfully!</p>
+
+            </div>
+
+
+            <div class="success">
+
+                ✓
+
+            </div>
+
+
+            <div class="ticket-details">
+
+                <p>
+                    <strong>Booking ID:</strong>
+                    <span id="bookingId"></span>
+                </p>
+
+                <p>
+                    <strong>Customer:</strong>
+                    <span id="customerName"></span>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <span id="customerEmail"></span>
+                </p>
+
+                <hr>
+
+
+                <p>
+                    <strong>Movie:</strong>
+                    <span id="movie"></span>
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    <span id="date"></span>
+                </p>
+
+                <p>
+                    <strong>Time:</strong>
+                    <span id="time"></span>
+                </p>
+
+                <p>
+                    <strong>Seats:</strong>
+                    <span id="seats"></span>
+                </p>
+
+                <p>
+                    <strong>Tickets:</strong>
+                    <span id="tickets"></span>
+                </p>
+
+                <hr>
+
+                <h2>
+                    Total:
+                    ₹<span id="total"></span>
+                </h2>
+
+            </div>
+
+
+            <div class="ticket-footer">
+
+                <p>
+                    Please show this ticket at the theatre entrance.
+                </p>
+
+                <button onclick="window.print()">
+                    🖨️ Print Ticket
+                </button>
+
+                <button onclick="goHome()">
+                    Back to Home
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        // Get booking information
+
+        let movie =
+            localStorage.getItem("movie");
+
+        let date =
+            localStorage.getItem("showDate");
+
+        let time =
+            localStorage.getItem("showTime");
+
+        let seats =
+            JSON.parse(
+                localStorage.getItem("selectedSeats")
+            );
+
+        let total =
+            localStorage.getItem("totalPrice");
+
+        let customerName =
+            localStorage.getItem("customerName");
+
+        let customerEmail =
+            localStorage.getItem("customerEmail");
+
+
+        // Create Booking ID
+
+        let bookingId =
+            "MB" + Math.floor(100000 + Math.random() * 900000);
+
+
+        // Display information
+
+        document.getElementById("bookingId").innerText =
+            bookingId;
+
+        document.getElementById("customerName").innerText =
+            customerName;
+
+        document.getElementById("customerEmail").innerText =
+            customerEmail;
+
+        document.getElementById("movie").innerText =
+            movie;
+
+        document.getElementById("date").innerText =
+            date;
+
+        document.getElementById("time").innerText =
+            time;
+
+        document.getElementById("seats").innerText =
+            seats.join(", ");
+
+        document.getElementById("tickets").innerText =
+            seats.length;
+
+        document.getElementById("total").innerText =
+            total;
+
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

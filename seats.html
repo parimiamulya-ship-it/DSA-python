@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Select Seats - MovieBook</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+        <h1>🎬 MovieBook</h1>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="movies.html">Movies</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Seat Selection -->
+
+    <section class="seat-section">
+
+        <h2>Select Your Seats</h2>
+
+        <!-- Booking Information -->
+
+        <div class="booking-info">
+
+            <p>
+                Movie:
+                <strong id="movieName"></strong>
+            </p>
+
+            <p>
+                Date:
+                <strong id="showDate"></strong>
+            </p>
+
+            <p>
+                Time:
+                <strong id="showTime"></strong>
+            </p>
+
+        </div>
+
+
+        <!-- Screen -->
+
+        <div class="screen">
+
+            SCREEN
+
+        </div>
+
+
+        <!-- Seats -->
+
+        <div class="seat-container">
+
+
+            <!-- Row A -->
+
+            <div class="seat-row">
+
+                <span>A</span>
+
+                <button class="seat" data-seat="A1">1</button>
+                <button class="seat" data-seat="A2">2</button>
+                <button class="seat" data-seat="A3">3</button>
+                <button class="seat" data-seat="A4">4</button>
+                <button class="seat" data-seat="A5">5</button>
+
+            </div>
+
+
+            <!-- Row B -->
+
+            <div class="seat-row">
+
+                <span>B</span>
+
+                <button class="seat" data-seat="B1">1</button>
+                <button class="seat" data-seat="B2">2</button>
+                <button class="seat" data-seat="B3">3</button>
+                <button class="seat" data-seat="B4">4</button>
+                <button class="seat" data-seat="B5">5</button>
+
+            </div>
+
+
+            <!-- Row C -->
+
+            <div class="seat-row">
+
+                <span>C</span>
+
+                <button class="seat" data-seat="C1">1</button>
+                <button class="seat" data-seat="C2">2</button>
+                <button class="seat" data-seat="C3">3</button>
+                <button class="seat" data-seat="C4">4</button>
+                <button class="seat" data-seat="C5">5</button>
+
+            </div>
+
+
+            <!-- Row D -->
+
+            <div class="seat-row">
+
+                <span>D</span>
+
+                <button class="seat" data-seat="D1">1</button>
+                <button class="seat" data-seat="D2">2</button>
+                <button class="seat" data-seat="D3">3</button>
+                <button class="seat" data-seat="D4">4</button>
+                <button class="seat" data-seat="D5">5</button>
+
+            </div>
+
+
+            <!-- Row E -->
+
+            <div class="seat-row">
+
+                <span>E</span>
+
+                <button class="seat" data-seat="E1">1</button>
+                <button class="seat" data-seat="E2">2</button>
+                <button class="seat" data-seat="E3">3</button>
+                <button class="seat" data-seat="E4">4</button>
+                <button class="seat" data-seat="E5">5</button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Seat Information -->
+
+        <div class="seat-info">
+
+            <span>
+                🟩 Selected
+            </span>
+
+            <span>
+                ⬜ Available
+            </span>
+
+        </div>
+
+
+        <!-- Booking Summary -->
+
+        <div class="booking-summary">
+
+            <h3>Booking Summary</h3>
+
+            <p>
+                Selected Seats:
+                <strong id="selectedSeats">
+                    None
+                </strong>
+            </p>
+
+            <p>
+                Number of Tickets:
+                <strong id="ticketCount">
+                    0
+                </strong>
+            </p>
+
+            <p>
+                Price per Ticket:
+                ₹150
+            </p>
+
+            <h3>
+                Total:
+                ₹<span id="totalPrice">0</span>
+            </h3>
+
+            <button onclick="continueBooking()">
+                Continue
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        // Get booking information
+
+        document.getElementById("movieName").innerText =
+            localStorage.getItem("movie");
+
+        document.getElementById("showDate").innerText =
+            localStorage.getItem("showDate");
+
+        document.getElementById("showTime").innerText =
+            localStorage.getItem("showTime");
+
+
+        // Store selected seats
+
+        let selectedSeats = [];
+
+        const ticketPrice = 150;
+
+
+        // Get all seats
+
+        const seats =
+            document.querySelectorAll(".seat");
+
+
+        // Add click event to every seat
+
+        seats.forEach(function(seat) {
+
+            seat.addEventListener("click", function() {
+
+                const seatNumber =
+                    seat.getAttribute("data-seat");
+
+
+                // Check whether seat is already selected
+
+                if (selectedSeats.includes(seatNumber)) {
+
+                    // Remove seat
+
+                    selectedSeats =
+                        selectedSeats.filter(
+                            function(item) {
+                                return item !== seatNumber;
+                            }
+                        );
+
+                    seat.classList.remove("selected");
+
+                }
+
+                else {
+
+                    // Add seat
+
+                    selectedSeats.push(seatNumber);
+
+                    seat.classList.add("selected");
+
+                }
+
+
+                // Update information
+
+                updateBooking();
+
+            });
+
+        });
+
+
+        function updateBooking() {
+
+            document.getElementById("selectedSeats").innerText =
+                selectedSeats.length > 0
+                ? selectedSeats.join(", ")
+                : "None";
+
+
+            document.getElementById("ticketCount").innerText =
+                selectedSeats.length;
+
+
+            document.getElementById("totalPrice").innerText =
+                selectedSeats.length * ticketPrice;
+
+        }
+
+
+        function continueBooking() {
+
+            if (selectedSeats.length === 0) {
+
+                alert("Please select at least one seat.");
+
+                return;
+
+            }
+
+
+            // Save selected seats
+
+            localStorage.setItem(
+                "selectedSeats",
+                JSON.stringify(selectedSeats)
+            );
+
+
+            localStorage.setItem(
+                "totalPrice",
+                selectedSeats.length * ticketPrice
+            );
+
+
+            // Go to booking page
+
+            window.location.href =
+                "booking.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
